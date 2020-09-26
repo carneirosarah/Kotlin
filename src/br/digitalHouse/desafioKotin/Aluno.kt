@@ -1,6 +1,6 @@
 package br.digitalHouse.desafioKotin
 
-// Construtor da classe aluno contendo nome, sobrenome e codigo do aluno
+// Construtor da classe Aluno contendo nome, sobrenome e codigo do aluno
 data class Aluno (var nome: String, var sobrenome: String, val codigoAluno: Int) {
 
     // Funcao que compara dois alunos pelo seu codigo
