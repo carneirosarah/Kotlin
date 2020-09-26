@@ -1,6 +1,6 @@
 package br.digitalHouse.desafioKotin
 
-// Construtor da classe Aluno contendo nome, sobrenome, tempo de casa e codigo do professor
+// Construtor da classe Professor contendo nome, sobrenome, tempo de casa e codigo do professor
 abstract class Professor (var nome: String,
                           var sobrenome: String,
                           var tempoCasa: Int,

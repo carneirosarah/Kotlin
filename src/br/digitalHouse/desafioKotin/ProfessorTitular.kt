@@ -1,5 +1,6 @@
 package br.digitalHouse.desafioKotin
 
+// Construtor da classe ProfessorTitular contendo nome, sobrenome, tempo de casa, codigo do professor e especialidade
 class ProfessorTitular (nome: String,
                        sobrenome: String,
                        tempoCasa: Int,

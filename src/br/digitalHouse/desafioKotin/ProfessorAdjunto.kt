@@ -1,5 +1,6 @@
 package br.digitalHouse.desafioKotin
 
+// Construtor da classe ProfessorAdjunto contendo nome, sobrenome, tempo de casa, codigo do professor e horas de mentoria
 class ProfessorAdjunto (nome: String,
                         sobrenome: String,
                         tempoCasa: Int,
