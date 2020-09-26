@@ -1,8 +1,13 @@
 package br.digitalHouse.desafioKotin
 
-// Construtor da classe Curso contendo nome, e codigo do curso
+/* Construtor da classe Curso contendo nome, codigo do curso, professor titular,
+professorAjunto, um map de alunos e a quantidade maxima de alunos */
 data class Curso (var nome: String,
-                  val codigoCurso: Int
+                  val codigoCurso: Int,
+                  var professorTitular: ProfessorTitular,
+                  var professorAdjunto: ProfessorAdjunto,
+                  var alunos: MutableMap<Int, Aluno>,
+                  var qtdMaxAlunos: Int
 ) {
 
     // Funcao que compara dois cursos pelo seu codigo
