@@ -4,7 +4,9 @@ import java.util.*
 
 // Construtor da classe Matricula contendo aluno e curso.
 data class Matricula (val aluno: Aluno,
-                      val curso: Curso) {
+                      val curso: Curso,
+                      val codigoMatricula: Int
+) {
 
     // O atributo dataMatricula e inicializado com a data do dia
     val dataMatricula: Date = Date()
