@@ -9,7 +9,11 @@ fun main() {
     println(curso.equals(Curso("teste2", 1)))
     println(curso.toString())
 
-    val professor = Professor("prof", "teste", 1, 1)
-    println(professor.equals(Professor("prof2", "teste2", 4, 1)))
-    println(professor.toString())
+    val professorTitular = ProfessorTitular("prof", "teste", 1, 1, "teste")
+    println(professorTitular.equals(ProfessorTitular("prof2", "teste2", 4, 1, "teste2")))
+    println(professorTitular.toString())
+
+    val professorAdjunto = ProfessorAdjunto("adj", "teste3", 5, 2, 8)
+    println(professorAdjunto.equals(ProfessorAdjunto("profadj", "teste4", 6, 2, 1)))
+    println(professorAdjunto.toString())
 }
