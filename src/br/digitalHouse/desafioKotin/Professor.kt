@@ -1,7 +1,11 @@
 package br.digitalHouse.desafioKotin
 
 // Construtor da classe Aluno contendo nome, sobrenome, tempo de casa e codigo do professor
-data class Professor (var nome: String, var sobrenome: String, var tempoCasa: Int, val codigoProfessor: Int) {
+abstract class Professor (var nome: String,
+                          var sobrenome: String,
+                          var tempoCasa: Int,
+                          val codigoProfessor: Int
+) {
 
     // Funcao que compara dois professores pelo seu codigo
     override fun equals(other: Any?): Boolean {
