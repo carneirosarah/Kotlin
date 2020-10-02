@@ -1,19 +1,21 @@
 package br.digitalHouse.desafioKotin
 
 // Construtor da classe DigitalHouseManager contendo alunos, professores, cursos e matriculas.
-class DigitalHouseManager (val alunos: MutableMap<Int, Aluno>,
-                           val professores: MutableMap<Int, Professor>,
-                           val cursos: MutableMap<Int, Curso>,
-                           val matriculas: MutableMap<Int, Matricula>
-){
+class DigitalHouseManager {
+
+    val alunos = mutableMapOf<Int, Aluno>()
+    val professores = mutableMapOf<Int, Professor>()
+    val cursos = mutableMapOf<Int, Curso>()
+    val matriculas = mutableMapOf<Int, MutableList<Matricula>>()
+
     // metodo que consulta se um curso está contido na lista de cursos
     fun consultarCurso(codigoCurso: Int): Boolean = cursos.contains(codigoCurso)
 
     // metodo que registra um curso
     fun registrarCurso(nome: String, codigoCurso: Int, qtdMaxAlunos: Int) {
 
-        val curso = Curso(nome, codigoCurso, null, null, mutableMapOf<Int, Aluno>(), qtdMaxAlunos)
-        cursos.put(codigoCurso, curso)
+        val curso = Curso(nome, codigoCurso, null, null, mutableMapOf(), qtdMaxAlunos)
+        cursos[codigoCurso] = curso
         println("[Digital House] Curso resgistrado com sucesso!!")
     }
 
@@ -35,14 +37,14 @@ class DigitalHouseManager (val alunos: MutableMap<Int, Aluno>,
     fun registrarProfessorAdjunto(nome: String, sobrenome: String, codigoProfessor: Int, quantidadeDeHoras: Int) {
 
         val profAdjunto = ProfessorAdjunto(nome, sobrenome, 0, codigoProfessor, quantidadeDeHoras)
-        professores.put(codigoProfessor, profAdjunto)
+        professores[codigoProfessor] = profAdjunto
         println("[Digital House] Professor Adjunto resgistrado com sucesso!!")
     }
 
     // metodo que registra um professor titular
     fun registrarProfessorTitular(nome: String, sobrenome: String, codigoProfessor: Int, especialidade: String) {
         val profTitular = ProfessorTitular(nome, sobrenome, 0, codigoProfessor, especialidade)
-        professores.put(codigoProfessor, profTitular)
+        professores[codigoProfessor] = profTitular
         println("[Digital House] Professor Titular resgistrado com sucesso!!")
     }
 
@@ -60,21 +62,35 @@ class DigitalHouseManager (val alunos: MutableMap<Int, Aluno>,
     // metodo que consulta se um aluno está contido na lista de alunos
     fun consultarAluno(codigoAluno: Int): Boolean = alunos.contains(codigoAluno)
 
+    // metodo que consulta se um aluno já possui alguma matricula
+    fun consultarMarticula(codigoAluno: Int): Boolean = matriculas.contains(codigoAluno)
+
     // metodo que registra um aluno
     fun matricularAluno(nome: String, sobrenome: String, codigoAluno: Int) {
 
         val aluno = Aluno(nome, sobrenome, codigoAluno)
-        alunos.put(codigoAluno, aluno)
+        alunos[codigoAluno] = aluno
     }
 
     // metodo que matricula um aluno em um curso
     fun matricularAluno(codigoAluno: Int, codigoCurso: Int) {
 
         when {
+            consultarMarticula(codigoAluno) && consultarCurso(codigoCurso) -> {
+                if ((cursos[codigoCurso])!!.adicionarAluno(alunos[codigoAluno])) {
+                    val matricula = Matricula((alunos[codigoAluno] as Aluno), (cursos[codigoCurso] as Curso))
+                    matriculas[codigoAluno]?.add(matricula)
+                    println("[Digital House] Matricula realizada com sucesso!!")
+                } else {
+                    println("[Digital House] Não há vagas disponiveis no curso informado!!")
+                }
+            }
             consultarAluno(codigoAluno) && consultarCurso(codigoCurso) -> {
                 if ((cursos[codigoCurso])!!.adicionarAluno(alunos[codigoAluno])) {
                     val matricula = Matricula((alunos[codigoAluno] as Aluno), (cursos[codigoCurso] as Curso))
-                    matriculas.put(codigoAluno, matricula)
+                    val listMatriculas = mutableListOf<Matricula>()
+                    listMatriculas.add(matricula)
+                    matriculas[codigoAluno] = listMatriculas
                     println("[Digital House] Matricula realizada com sucesso!!")
                 } else {
                     println("[Digital House] Não há vagas disponiveis no curso informado!!")
@@ -99,6 +115,16 @@ class DigitalHouseManager (val alunos: MutableMap<Int, Aluno>,
             consultarProfessor(codigoProfessorTitular) -> println("[Digital House] O professor titular informado não existe!!")
             consultarProfessor(codigoProfessorAdjunto) -> println("[Digital House] O professor adjunto informado não existe!!")
             else -> println("[Digital House] O  curso e professores informados não existem!!")
+        }
+    }
+
+    // metodo que informa os cursos em que um aluno se matriculou
+    fun consultarCursos(codigoAluno: Int) {
+        when {
+            consultarMarticula(codigoAluno) -> {
+                println("[Digital House] O aluno informado esta cadastrado nos seguintes cursos")
+                matriculas[codigoAluno]?.forEach { matricula -> println(matricula.curso) }
+            } else -> println("[Digital House] O aluno informado não possuí nenhuma matricula!!")
         }
     }
 
