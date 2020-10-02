@@ -1,26 +1,28 @@
 package br.digitalHouse.desafioKotin
 
+import kotlin.reflect.typeOf
+
 /* Construtor da classe Curso contendo nome, codigo do curso, professor titular,
 professorAjunto, um map de alunos e a quantidade maxima de alunos */
 class Curso (var nome: String,
              val codigoCurso: Int,
-             var professorTitular: ProfessorTitular,
-             var professorAdjunto: ProfessorAdjunto,
+             var professorTitular: ProfessorTitular?,
+             var professorAdjunto: ProfessorAdjunto?,
              var alunos: MutableMap<Int, Aluno>,
              var qtdMaxAlunos: Int
 ) {
     var qtdAtualAlunos = 0 // Guarda a quantidade de alunos matriculados no curso
     var vagasDisponiveis = qtdMaxAlunos // Guarda o numero de vaga disponiveis no  curso
 
-    // funcao que consulta se um aluno está contido na lista de alunos do curso
-    fun consultarAluno (aluno: Aluno): Boolean = alunos.containsValue(aluno)
+    // metodo que consulta se um aluno está contido na lista de alunos do curso
+    fun consultarAluno(aluno: Aluno?): Boolean = alunos.containsValue(aluno)
 
-    // funcao que adiciona um aluno ao curso quando este não está contido na lista de alunos e existem vagas disponiveis
-    fun adicionarAluno (aluno: Aluno): Boolean {
+    // metodo que adiciona um aluno ao curso quando este não está contido na lista de alunos e existem vagas disponiveis
+    fun adicionarAluno(aluno: Aluno?): Boolean {
 
         when {
             !consultarAluno(aluno) && vagasDisponiveis > 0 -> {
-                alunos.put(aluno.codigoAluno, aluno)
+                alunos.put(aluno!!.codigoAluno, aluno)
                 qtdAtualAlunos++
                 vagasDisponiveis--
                 return true
@@ -28,8 +30,8 @@ class Curso (var nome: String,
         }
     }
 
-    // funcao que exclui um aluno do curso quando este está contido na lista de alunos
-    fun excluirAluno (aluno: Aluno): Boolean {
+    // metodo que exclui um aluno do curso quando este está contido na lista de alunos
+    fun excluirAluno(aluno: Aluno): Boolean {
 
         when {
             consultarAluno(aluno) -> {
@@ -41,7 +43,7 @@ class Curso (var nome: String,
         }
     }
 
-    // Funcao que compara dois cursos pelo seu codigo
+    // metodo que compara dois cursos pelo seu codigo
     override fun equals(other: Any?): Boolean {
 
         if (this === other) return true
